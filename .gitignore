@@ -1,0 +1,9 @@
+/package-lock.json
+/node_modules
+/build
+*.pyc
+/uploads/*
+/saved/*
+!/saved/temp.txt
+!/uploads/temp.txt
+/diss-img-tool-lw/pretrained_models/*
