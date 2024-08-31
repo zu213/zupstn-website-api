@@ -17,7 +17,7 @@ var uploadInput = multer(
 let runGen = () => {return new Promise((success, nosuccess) => {
 
     const { spawn } = require('child_process');
-    const pyprog = spawn('py', ['diss-img-tool-lw/first_image_generator.py']);
+    const pyprog = spawn('py', ['./diss-img-tool-lw/first_image_generator.py']);
 
     pyprog.on('close', (data) => {
         success("./saved/option1.png");         
