@@ -1,7 +1,6 @@
 
 const express = require('express')
 const app = express()
-
 var fs = require ('fs');
 var multer = require('multer');
 
@@ -21,8 +20,7 @@ let runGen = () => {return new Promise((success, nosuccess) => {
     const pyprog = spawn('py', ['diss-img-tool-lw/first_image_generator.py']);
 
     pyprog.on('close', (data) => {
-        const b = System.IO.File.ReadAllBytes("./saved/option1.png");   // You can use your own method over here.         
-        success(File(b, "image/jpeg"));
+        success("./saved/option1.png");         
     });
 
     pyprog.stdout.on('data', (data) => {
@@ -55,7 +53,7 @@ app.get('/', async (req, res) => {
         if(response === false){
             res.status(404).send('something went wrong');
         }else{
-            res.status(200).send(response)
+            res.status(200).send('all good')
         }
 
     }catch(err){
@@ -63,6 +61,11 @@ app.get('/', async (req, res) => {
         res.status(404).send('something went wrong');
 
     }
+})
+
+app.get('/option/:number', (req, res) => {
+    const option = req.params.number;
+    res.sendFile(`./saved/option${option}.png`, { root: '.' })
 })
 
 // accessed to run the generator witha  choice inputted

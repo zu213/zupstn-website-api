@@ -58,6 +58,7 @@ def main(image_path_sketch, image_path_art):
     
 
 # normal main run
+cleanup_models()
 opt = bicycle_gan_opts(name)
 model = create_model(opt)
 model.setup(opt) 
