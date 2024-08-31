@@ -3,6 +3,7 @@ import torch
 from collections import OrderedDict
 from abc import ABC, abstractmethod
 from . import networks
+import boto3 
 
 
 class BaseModel(ABC):
@@ -178,8 +179,42 @@ class BaseModel(ABC):
         """
         for name in self.model_names:
             if isinstance(name, str):
+                # LOAD SPECIFIC PATHS HERE ALTER
+                aaa = 's3://zupathbucket/1675_net_D.pth'
+                paths1 = '1675_net_D.pth'
+                paths2 = '1675_net_D2.pth'
+                paths3 = '1675_net_E.pth'
+                paths4 = '1675_net_FMT.pth'
+                paths5 = '1675_net_G.pth'
+
+                BUCKET_NAME = 'zupathbucket'
+
+                # Creating an S3 access object 
+                obj = boto3.client("s3") 
+                # Downloading files  
+                # from S3 bucket to local folder 
+                obj.download_file( 
+                    Filename="./diss-img-tool-lw/pretrained_models/high_ren/1675_net_D.pth", 
+                    Bucket="zupathbucket", 
+                    Key=paths1
+                )
+
+                obj.download_file( 
+                    Filename="./diss-img-tool-lw/pretrained_models/high_ren/1675_net_E.pth", 
+                    Bucket="zupathbucket", 
+                    Key=paths3
+                )
+
+                obj.download_file( 
+                    Filename="./diss-img-tool-lw/pretrained_models/high_ren/1675_net_G.pth", 
+                    Bucket="zupathbucket", 
+                    Key=paths5
+                )
+
+
                 load_filename = '%s_net_%s.pth' % (epoch, name)
                 load_path = os.path.join(self.save_dir, load_filename)
+                print(load_path)
                 net = getattr(self, 'net' + name)
                 if isinstance(net, torch.nn.DataParallel):
                     net = net.module

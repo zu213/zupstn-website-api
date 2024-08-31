@@ -21,7 +21,8 @@ let runGen = () => {return new Promise((success, nosuccess) => {
     const pyprog = spawn('py', ['diss-img-tool-lw/first_image_generator.py']);
 
     pyprog.on('close', (data) => {
-        success(true);
+        const b = System.IO.File.ReadAllBytes("./saved/option1.png");   // You can use your own method over here.         
+        success(File(b, "image/jpeg"));
     });
 
     pyprog.stdout.on('data', (data) => {
@@ -53,8 +54,8 @@ app.get('/', async (req, res) => {
         const response = await runGen()
         if(response === false){
             res.status(404).send('something went wrong');
-        }else if(response === true){
-            res.status(200).send('all good')
+        }else{
+            res.status(200).send(response)
         }
 
     }catch(err){
@@ -77,8 +78,8 @@ app.get('/choice/:number', async (req, res) => {
         const response = await runGen()
         if(response === false){
             res.status(404).send('something went wrong');
-        }else if(response === true){
-            res.status(200).send('all good')
+        }else{
+            res.status(200).send(response)
         }
     }catch(err){
         console.log(err)
