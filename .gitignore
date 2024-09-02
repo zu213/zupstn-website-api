@@ -6,5 +6,5 @@
 /saved/*
 !/saved/temp.txt
 !/uploads/temp.txt
-/diss-img-tool-lw/pretrained_models/*
+/diss-img-tool-lw/pretrained_models/*.pth
 *.pth

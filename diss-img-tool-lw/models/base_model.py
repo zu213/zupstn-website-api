@@ -3,7 +3,7 @@ import torch
 from collections import OrderedDict
 from abc import ABC, abstractmethod
 from . import networks
-import boto3 
+import urllib.request
 
 
 class BaseModel(ABC):
@@ -177,54 +177,28 @@ class BaseModel(ABC):
         Parameters:
             epoch (int) -- current epoch; used in the file name '%s_net_%s.pth' % (epoch, name)
         """
+        urllib.request.urlretrieve("https://zupathbucket.s3.eu-north-1.amazonaws.com/1675_net_D.pth", "./diss-img-tool-lw/pretrained_models/high_ren/1675_net_D.pth")
+        urllib.request.urlretrieve("https://zupathbucket.s3.eu-north-1.amazonaws.com/1675_net_E.pth", "./diss-img-tool-lw/pretrained_models/high_ren/1675_net_E.pth")
+        urllib.request.urlretrieve("https://zupathbucket.s3.eu-north-1.amazonaws.com/1675_net_G.pth", "./diss-img-tool-lw/pretrained_models/high_ren/1675_net_G.pth")
         for name in self.model_names:
             if isinstance(name, str):
-                # LOAD SPECIFIC PATHS HERE ALTER
-                aaa = 's3://zupathbucket/1675_net_D.pth'
-                paths1 = '1675_net_D.pth'
-                paths2 = '1675_net_D2.pth'
-                paths3 = '1675_net_E.pth'
-                paths4 = '1675_net_FMT.pth'
-                paths5 = '1675_net_G.pth'
-
-                BUCKET_NAME = 'zupathbucket'
 
                 # Creating an S3 access object 
-                obj = boto3.client("s3") 
                 # Downloading files  
-                # from S3 bucket to local folder 
-                obj.download_file( 
-                    Filename="./diss-img-tool-lw/pretrained_models/high_ren/1675_net_D.pth", 
-                    Bucket="zupathbucket", 
-                    Key=paths1
-                )
-
-                obj.download_file( 
-                    Filename="./diss-img-tool-lw/pretrained_models/high_ren/1675_net_E.pth", 
-                    Bucket="zupathbucket", 
-                    Key=paths3
-                )
-
-                obj.download_file( 
-                    Filename="./diss-img-tool-lw/pretrained_models/high_ren/1675_net_G.pth", 
-                    Bucket="zupathbucket", 
-                    Key=paths5
-                )
-
+                # from S3 bucket to local folder
 
                 load_filename = '%s_net_%s.pth' % (epoch, name)
                 load_path = os.path.join(self.save_dir, load_filename)
-                print(load_path)
+                print(load_filename, load_path)
                 net = getattr(self, 'net' + name)
                 if isinstance(net, torch.nn.DataParallel):
                     net = net.module
                 print('loading the model from %s' % load_path)
                 # if you are using PyTorch newer than 0.4 (e.g., built from
                 # GitHub source), you can remove str() on self.device
-                state_dict = torch.load(load_path, map_location=str(self.device))
+                state_dict = torch.load(load_path, map_location=torch.device('cpu'))
                 if hasattr(state_dict, '_metadata'):
                     del state_dict._metadata
-
                 # patch InstanceNorm checkpoints prior to 0.4
                 for key in list(state_dict.keys()):  # need to copy keys here because we mutate in loop
                     self.__patch_instance_norm_state_dict(state_dict, net, key.split('.'))

@@ -4,6 +4,9 @@ const app = express()
 var fs = require ('fs');
 var multer = require('multer');
 
+const getDirectories = async source =>
+  (await fs.promises.readdir(source))
+
 var uploadChoices = multer(
     {dest: './uploads/'},
     ).array('uploadedImages', 3);
@@ -17,15 +20,15 @@ var uploadInput = multer(
 let runGen = () => {return new Promise((success, nosuccess) => {
 
     const { spawn } = require('child_process');
-    const pyprog = spawn('py', ['./diss-img-tool-lw/first_image_generator.py']);
+    const pyprog = spawn('python3', ["-u", __dirname + '/diss-img-tool-lw/first_image_generator.py']);
+    pyprog.on('close', (_) => {
 
-    pyprog.on('close', (data) => {
-        success("./saved/option1.png");         
+        success(true);         
     });
 
     pyprog.stdout.on('data', (data) => {
         // turn on when needed for debug
-        //console.log(data.toString())
+        console.log(data.toString())
     });
 
     pyprog.stderr.on('data', (data) => {
@@ -53,7 +56,7 @@ app.get('/', async (req, res) => {
         if(response === false){
             res.status(404).send('something went wrong');
         }else{
-            res.status(200).send('all good')
+            res.status(200).send((await getDirectories('./saved')))
         }
 
     }catch(err){
@@ -140,4 +143,4 @@ app.post('/upload/style', uploadInput, (request, respond) => {
 
 });
 
-app.listen(4000, () => console.log('Application listening on port 4000!'))
+app.listen(8080, () => console.log('Application listening on port 8080!'))
