@@ -1,3 +1,3 @@
-# zu213-api
+# 🤖 zupstn website api and backend
 
-API backend for the dissertation, currently hosted on google cloud, only works with one user at the current moment. unlikely to change due to the low volume of traffic
+API and backend for the dissertation on my website, currently hosted on google cloud, utilises a lightweight version of my dissertations code to run through the model.
