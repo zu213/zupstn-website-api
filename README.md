@@ -15,10 +15,10 @@ This system is currently hosted on **Google Cloud**.
 - [Running the RLHF Cycle App Locally](#running-the-rlhf-cycle-app-locally)
   - [Prerequisites](#prerequisites)
   - [Execution](#execution)
-- [Running the API Locally](#running-locally)
+- [Running the API Locally](#running-the-api-locally)
   - [Prerequisites](#prerequisites-1)
   - [Execution](#execution-1)
-- [References](#-references)
+- [References](#references)
 
 ---
 
@@ -64,11 +64,11 @@ This runs a **single iteration** of the app, outputs can found in the saved fold
 
 ---
 
-## 🏠 Running the API Locally
+## Running the API Locally
 
 You can run this using **Docker** for a seamless experience without dependency issues. However, for local API execution, I recommend simply using **Node.js**.
 
-### 📌 Prerequisites
+### Prerequisites
 
 #### With Docker:
 - Docker
