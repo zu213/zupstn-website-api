@@ -10,6 +10,9 @@ export default function handler(req, res) {
 
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate');
+    res.setHeader('Access-Control-Allow-Origin', 'https://zupstn.com')
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     res.status(200).json(data);
   } catch (err) {
     console.error('Failed to read JSON:', err);
