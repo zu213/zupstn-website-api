@@ -30,7 +30,6 @@ def cleanup_models():
     folder = './diss-img-tool-lw/pretrained_models/high_ren'
     for filename in os.listdir(folder):
         file_path = os.path.join(folder, filename)
-        print(filename)
         if (os.path.isfile(file_path) or os.path.islink(file_path)) and filename.endswith('.pth'):
             os.unlink(file_path)
 

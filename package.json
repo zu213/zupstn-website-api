@@ -1,12 +1,12 @@
 {
   "name": "api",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
-  "main": "api.js",
+  "main": "api.py",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "",
-    "start": "node api.js"
+    "start": "uvicorn api:app --host 0.0.0.0 --port 8080"
   },
   "repository": {
     "type": "git",
@@ -14,9 +14,6 @@
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/zu213/zu213-api/issues"
-  },
   "homepage": "https://github.com/zu213/zu213-api#readme",
   "dependencies": {
     "express": "^4.19.2",
