@@ -8,7 +8,7 @@ This repository is split into two parts:
 
 2) A lightweight version of my dissertation's code, a **"RLHF cycle app"**. This app takes input images, uses AI to generate new images, and allows users to choose between them to further refine the generated outputs. Based on these choices, the model adapts accordingly.
 
-This second system is currently hosted on **Google Cloud**. The rest of this README is about my dissertation.
+The rest of this README is about my dissertation.
 
 ---
 
