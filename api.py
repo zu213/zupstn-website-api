@@ -4,6 +4,7 @@ from io import BytesIO
 from PIL import Image
 import sys
 import os
+import base64
 
 # Add path to use code from diss-img-tool-lw/
 sys.path.append(os.path.join(os.path.dirname(__file__), 'diss-img-tool-lw'))
@@ -28,16 +29,11 @@ async def generate(sketch: UploadFile = File(...), style: UploadFile = File(...)
     outputs, _ = generate_images(model, sketch_image, style_image)
 
     print(outputs)
-    def img_to_buf(img):
+    def image_to_base64(img):
         buf = BytesIO()
         img.save(buf, format="PNG")
-        buf.seek(0)
-        return buf
+        return base64.b64encode(buf.getvalue()).decode('utf-8')
 
     return {
-        "images": [
-            StreamingResponse(img_to_buf(outputs[0]), media_type="image/png"),
-            StreamingResponse(img_to_buf(outputs[1]), media_type="image/png"),
-            StreamingResponse(img_to_buf(outputs[2]), media_type="image/png"),
-        ]
+        "images": [image_to_base64(img) for img in outputs]
     }
