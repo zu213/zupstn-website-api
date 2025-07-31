@@ -23,6 +23,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+global count
 count = 0
 
 # Load model once on startup
@@ -34,6 +35,8 @@ print("Model setup successfully.")
 # POST endpoint
 @app.post("/generate/")
 async def generate(sketch: UploadFile = File(...), style: UploadFile = File(...)):
+  print("Request received")
+  global count
   sketch_image = Image.open(BytesIO(await sketch.read()))
   style_image = Image.open(BytesIO(await style.read()))
 
@@ -44,6 +47,7 @@ async def generate(sketch: UploadFile = File(...), style: UploadFile = File(...)
     img.save(buf, format="PNG")
     return base64.b64encode(buf.getvalue()).decode('utf-8')
 
+  count += 1
   print("Requested successfully, count since last restart: ", count)
   return {
     "images": [image_to_base64(img) for img in outputs]

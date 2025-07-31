@@ -70,7 +70,7 @@ This runs a **single iteration** of the app, outputs can found in the saved fold
 
 ## Running the API Locally
 
-You can run this using **Docker** for a seamless experience without dependency issues. However, for local API execution, I recommend simply using **Node.js**.
+You can run this using **Docker** for a seamless experience without dependency issues. However, for local API execution, I recommend simply using **Node.js** or **api.py**.
 
 ### Prerequisites
 
@@ -85,6 +85,7 @@ You can run this using **Docker** for a seamless experience without dependency i
 - `matplotlib`
 - `pillow`
 - `torchvision`
+- `python-multipart`
 
 ### Execution
 
